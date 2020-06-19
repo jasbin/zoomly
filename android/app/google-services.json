@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "773028656914",
+    "firebase_url": "https://zoomly-a3600.firebaseio.com",
+    "project_id": "zoomly-a3600",
+    "storage_bucket": "zoomly-a3600.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773028656914:android:20558c838ae71c4ab0e5cb",
+        "android_client_info": {
+          "package_name": "com.technicalcreations.net"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773028656914-ho6gmd2fl5adfk8b38begueitdh9b9jc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6tD3OPh3ItjnC_YG0vU4O2wuLULE85HI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773028656914-ho6gmd2fl5adfk8b38begueitdh9b9jc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

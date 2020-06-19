@@ -43,5 +43,7 @@
 	<false/>
 	<key>NSCameraUsageDescription</key>
 	<key>NSMicrophoneUsageDescription</key>
+	<key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-1666784341597244~3937435617</string>
 </dict>
 </plist>

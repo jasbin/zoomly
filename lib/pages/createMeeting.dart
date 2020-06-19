@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
@@ -14,12 +15,17 @@ class CreateMeeting extends StatefulWidget {
 class _CreateMeetingState extends State<CreateMeeting> {
   final serverText = TextEditingController();
   final roomText = TextEditingController(text: generateRoomId());
-  final nameText = TextEditingController(text: "your name");
+  final nameText = TextEditingController(text: "");
   final iosAppBarRGBAColor =
       TextEditingController(text: "#0080FF80"); //transparent blue
   var isAudioOnly = false;
   var isAudioMuted = false;
   var isVideoMuted = false;
+
+  //ads
+  InterstitialAd _interstitialAd;
+  static const String testDevice = 'F4FA7C1356925D1F';
+
   static String generateRoomId() {
     var randomString = Random();
     return randomString.hashCode.toString();
@@ -28,6 +34,10 @@ class _CreateMeetingState extends State<CreateMeeting> {
   @override
   void initState() {
     super.initState();
+
+    _interstitialAd = createInterstitialAd();
+    _interstitialAd.load();
+
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
@@ -64,10 +74,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
               ),
             ),
             SizedBox(
-              height: 16.0,
-            ),
-            SizedBox(
-              height: 16.0,
+              height: 20.0,
             ),
             TextField(
               controller: nameText,
@@ -77,31 +84,15 @@ class _CreateMeetingState extends State<CreateMeeting> {
               ),
             ),
             SizedBox(
-              height: 16.0,
+              height: 5.0,
             ),
             CheckboxListTile(
               title: Text("Audio Only"),
               value: isAudioOnly,
               onChanged: _onAudioOnlyChanged,
             ),
-            SizedBox(
-              height: 16.0,
-            ),
-            CheckboxListTile(
-              title: Text("Audio Muted"),
-              value: isAudioMuted,
-              onChanged: _onAudioMutedChanged,
-            ),
-            SizedBox(
-              height: 16.0,
-            ),
-            CheckboxListTile(
-              title: Text("Video Muted"),
-              value: isVideoMuted,
-              onChanged: _onVideoMutedChanged,
-            ),
             Divider(
-              height: 48.0,
+              height: 30.0,
               thickness: 2.0,
             ),
             SizedBox(
@@ -109,6 +100,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
               width: double.maxFinite,
               child: RaisedButton(
                 onPressed: () {
+                  _interstitialAd.show();
                   _joinMeeting();
                 },
                 child: Text(
@@ -157,7 +149,8 @@ class _CreateMeetingState extends State<CreateMeeting> {
         ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
         ..audioOnly = isAudioOnly
         ..audioMuted = isAudioMuted
-        ..videoMuted = isVideoMuted;
+        ..videoMuted = isVideoMuted
+        ..chatEnabled = true;
 
       debugPrint("JitsiMeetingOptions: $options");
       await JitsiMeet.joinMeeting(
@@ -204,5 +197,23 @@ class _CreateMeetingState extends State<CreateMeeting> {
 
   _onError(error) {
     debugPrint("_onError broadcasted: $error");
+  }
+
+  static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    testDevices: testDevice != null ? <String>[testDevice] : null,
+    keywords: <String>['app', 'games'],
+    contentUrl: 'http://google.com',
+    childDirected: false,
+    nonPersonalizedAds: false,
+  );
+
+  InterstitialAd createInterstitialAd() {
+    return InterstitialAd(
+      adUnitId: InterstitialAd.testAdUnitId,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event) {
+        if (event == MobileAdEvent.failedToLoad) _interstitialAd.load();
+      },
+    );
   }
 }

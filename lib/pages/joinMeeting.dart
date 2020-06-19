@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
@@ -6,24 +9,35 @@ import 'package:jitsi_meet/room_name_constraint_type.dart';
 
 class JoinMeeting extends StatefulWidget {
   @override
-  _JoinMeetingState createState() => _JoinMeetingState();
+  JoinMeetingState createState() => JoinMeetingState();
 }
 
-class _JoinMeetingState extends State<JoinMeeting> {
+class JoinMeetingState extends State<JoinMeeting> {
   final serverText = TextEditingController();
-  final roomText = TextEditingController();
-  final subjectText = TextEditingController(text: "");
-  final nameText = TextEditingController(text: "user");
-  final emailText = TextEditingController(text: "user@email.com");
+  final roomText = TextEditingController(text: "");
+  final nameText = TextEditingController(text: "");
   final iosAppBarRGBAColor =
       TextEditingController(text: "#0080FF80"); //transparent blue
   var isAudioOnly = false;
   var isAudioMuted = false;
   var isVideoMuted = false;
 
+  //ads
+  InterstitialAd _interstitialAd;
+  static const String testDevice = 'F4FA7C1356925D1F';
+
+  static String generateRoomId() {
+    var randomString = Random();
+    return randomString.hashCode.toString();
+  }
+
   @override
   void initState() {
     super.initState();
+
+    _interstitialAd = createInterstitialAd();
+    _interstitialAd.load();
+
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
@@ -49,42 +63,36 @@ class _JoinMeetingState extends State<JoinMeeting> {
             SizedBox(
               height: 24.0,
             ),
+            SizedBox(
+              height: 16.0,
+            ),
             TextField(
               controller: roomText,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: "Room",
+                labelText: "Room Id",
               ),
             ),
             SizedBox(
-              height: 16.0,
+              height: 20.0,
+            ),
+            TextField(
+              controller: nameText,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Display Name",
+              ),
             ),
             SizedBox(
-              height: 16.0,
+              height: 5.0,
             ),
             CheckboxListTile(
               title: Text("Audio Only"),
               value: isAudioOnly,
               onChanged: _onAudioOnlyChanged,
             ),
-            SizedBox(
-              height: 16.0,
-            ),
-            CheckboxListTile(
-              title: Text("Audio Muted"),
-              value: isAudioMuted,
-              onChanged: _onAudioMutedChanged,
-            ),
-            SizedBox(
-              height: 16.0,
-            ),
-            CheckboxListTile(
-              title: Text("Video Muted"),
-              value: isVideoMuted,
-              onChanged: _onVideoMutedChanged,
-            ),
             Divider(
-              height: 48.0,
+              height: 30.0,
               thickness: 2.0,
             ),
             SizedBox(
@@ -92,6 +100,7 @@ class _JoinMeetingState extends State<JoinMeeting> {
               width: double.maxFinite,
               child: RaisedButton(
                 onPressed: () {
+                  _interstitialAd.show();
                   _joinMeeting();
                 },
                 child: Text(
@@ -136,13 +145,12 @@ class _JoinMeetingState extends State<JoinMeeting> {
       var options = JitsiMeetingOptions()
         ..room = roomText.text
         ..serverURL = serverUrl
-        ..subject = subjectText.text
         ..userDisplayName = nameText.text
-        ..userEmail = emailText.text
         ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
         ..audioOnly = isAudioOnly
         ..audioMuted = isAudioMuted
-        ..videoMuted = isVideoMuted;
+        ..videoMuted = isVideoMuted
+        ..chatEnabled = true;
 
       debugPrint("JitsiMeetingOptions: $options");
       await JitsiMeet.joinMeeting(
@@ -189,5 +197,23 @@ class _JoinMeetingState extends State<JoinMeeting> {
 
   _onError(error) {
     debugPrint("_onError broadcasted: $error");
+  }
+
+  static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    testDevices: testDevice != null ? <String>[testDevice] : null,
+    keywords: <String>['app', 'games'],
+    contentUrl: 'http://google.com',
+    childDirected: false,
+    nonPersonalizedAds: false,
+  );
+
+  InterstitialAd createInterstitialAd() {
+    return InterstitialAd(
+      adUnitId: InterstitialAd.testAdUnitId,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event) {
+        if (event == MobileAdEvent.failedToLoad) _interstitialAd.load();
+      },
+    );
   }
 }

@@ -1,4 +1,4 @@
-name: zoomly
+name: Zoomly
 description: Video Conferencing Application build in flutter
 
 # The following line prevents the package from being accidentally published to
@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   jitsi_meet: ^0.2.2
   circle_bottom_navigation: ^1.0.4
+  firebase_admob: ^0.9.3+2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -33,7 +34,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.3"
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
