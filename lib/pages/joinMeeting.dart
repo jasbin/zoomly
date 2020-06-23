@@ -4,6 +4,7 @@ import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 import 'package:jitsi_meet/room_name_constraint.dart';
 import 'package:jitsi_meet/room_name_constraint_type.dart';
+import 'package:zoomly/ads/admobads.dart';
 
 class JoinMeeting extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class JoinMeetingState extends State<JoinMeeting> {
 
   //ads
   InterstitialAd _interstitialAd;
-  static const String testDevice = 'F4FA7C1356925D1F';
+  static const String testDevice = '';
 
   @override
   void initState() {
@@ -193,16 +194,16 @@ class JoinMeetingState extends State<JoinMeeting> {
   }
 
   static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    testDevices: testDevice != null ? <String>[testDevice] : null,
-    keywords: <String>['app', 'games'],
-    contentUrl: 'http://google.com',
+    testDevices: <String>[],
+    keywords: <String>['app', 'videoconference'],
+    contentUrl: 'http://flutter.com',
     childDirected: false,
     nonPersonalizedAds: false,
   );
 
   InterstitialAd createInterstitialAd() {
     return InterstitialAd(
-      adUnitId: InterstitialAd.testAdUnitId,
+      adUnitId: AdmobAds.interstitialAdId(),
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event) {
         if (event == MobileAdEvent.failedToLoad) _interstitialAd.load();
