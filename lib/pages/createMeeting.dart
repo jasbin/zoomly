@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 import 'package:jitsi_meet/room_name_constraint.dart';
 import 'package:jitsi_meet/room_name_constraint_type.dart';
+import 'package:random_string/random_string.dart';
 
 class CreateMeeting extends StatefulWidget {
   @override
@@ -27,8 +26,7 @@ class _CreateMeetingState extends State<CreateMeeting> {
   static const String testDevice = 'F4FA7C1356925D1F';
 
   static String generateRoomId() {
-    var randomString = Random();
-    return randomString.hashCode.toString();
+    return randomAlphaNumeric(8);
   }
 
   @override

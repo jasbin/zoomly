@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:zoomly/ads/admobads.dart';
 import 'package:zoomly/pages/createMeeting.dart';
 import 'package:zoomly/pages/joinMeeting.dart';
+import 'package:zoomly/pages/loading.dart';
 
 void main() => runApp(MaterialApp(
-      home: Zoomly(),
+      initialRoute: '/',
+      routes: {'/': (context) => Loading(), '/home': (context) => Zoomly()},
+//      debugShowCheckedModeBanner: false,
     ));
 
 class Zoomly extends StatefulWidget {

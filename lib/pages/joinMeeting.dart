@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
@@ -25,11 +23,6 @@ class JoinMeetingState extends State<JoinMeeting> {
   //ads
   InterstitialAd _interstitialAd;
   static const String testDevice = 'F4FA7C1356925D1F';
-
-  static String generateRoomId() {
-    var randomString = Random();
-    return randomString.hashCode.toString();
-  }
 
   @override
   void initState() {
