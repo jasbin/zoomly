@@ -28,7 +28,7 @@ class _LoadingState extends State<Loading> {
             ),
             Center(
               child: Text(
-                'Zoomly Video Conference',
+                'Nepaly Video Conference',
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             )

@@ -4,7 +4,7 @@ import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 import 'package:jitsi_meet/room_name_constraint.dart';
 import 'package:jitsi_meet/room_name_constraint_type.dart';
-import 'package:zoomly/ads/admobads.dart';
+import 'package:nepaly/ads/admobads.dart';
 
 class JoinMeeting extends StatefulWidget {
   @override
@@ -42,6 +42,7 @@ class JoinMeetingState extends State<JoinMeeting> {
   @override
   void dispose() {
     super.dispose();
+    _interstitialAd.dispose();
     JitsiMeet.removeAllListeners();
   }
 

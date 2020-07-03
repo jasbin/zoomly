@@ -1,22 +1,22 @@
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
-import 'package:zoomly/ads/admobads.dart';
-import 'package:zoomly/pages/createMeeting.dart';
-import 'package:zoomly/pages/joinMeeting.dart';
-import 'package:zoomly/pages/loading.dart';
+import 'package:nepaly/ads/admobads.dart';
+import 'package:nepaly/pages/createMeeting.dart';
+import 'package:nepaly/pages/joinMeeting.dart';
+import 'package:nepaly/pages/loading.dart';
 
 void main() => runApp(MaterialApp(
       initialRoute: '/',
-      routes: {'/': (context) => Loading(), '/home': (context) => Zoomly()},
-//      debugShowCheckedModeBanner: false,
+      routes: {'/': (context) => Loading(), '/home': (context) => Nepaly()},
+      debugShowCheckedModeBanner: false,
     ));
 
-class Zoomly extends StatefulWidget {
+class Nepaly extends StatefulWidget {
   @override
-  _ZoomlyState createState() => _ZoomlyState();
+  _NepalyState createState() => _NepalyState();
 }
 
-class _ZoomlyState extends State<Zoomly> {
+class _NepalyState extends State<Nepaly> {
   BannerAd _bannerAd;
   int currentPage = 0;
 
@@ -38,7 +38,7 @@ class _ZoomlyState extends State<Zoomly> {
 
   @override
   void dispose() {
-    _bannerAd.dispose();
+//    _bannerAd.dispose();
     super.dispose();
   }
 
@@ -48,7 +48,7 @@ class _ZoomlyState extends State<Zoomly> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Zoomly"),
+          title: Text("Nepaly Video Conference"),
           centerTitle: true,
           backgroundColor: Colors.blue[800],
           bottom: TabBar(

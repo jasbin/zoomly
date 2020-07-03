@@ -8,9 +8,18 @@ class AdmobAds {
   InterstitialAd _interstitialAd;
 
   //appId and banner ad unit id here
+//  test app id: ca-app-pub-3940256099942544~3347511713
+//  test banner ads id:ca-app-pub-3940256099942544/6300978111
+//  test interstitial ads id: ca-app-pub-3940256099942544/1033173712
+
+//  real ads
+//  appid:ca-app-pub-3940256099942544~3347511713
+//  banneradunitid:ca-app-pub-1666784341597244/9270155322
+//  interstitialadunitid:ca-app-pub-1666784341597244/6069276914
+
   static String appId = "ca-app-pub-3940256099942544~3347511713";
-  static const bannerAdUnitId = "ca-app-pub-3940256099942544/6300978111";
-  static const interstitialAdUnitId = "ca-app-pub-3940256099942544/1033173712";
+  static const bannerAdUnitId = "ca-app-pub-1666784341597244/9270155322";
+  static const interstitialAdUnitId = "ca-app-pub-1666784341597244/6069276914";
 
   static InitializeAds() {
     FirebaseAdMob.instance.initialize(appId: appId);
